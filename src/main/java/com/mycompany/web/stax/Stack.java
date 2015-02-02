@@ -11,7 +11,6 @@ import fr.lille1.idl.stackoverflow.parsers.java.JavaStackTraceParser;
 import fr.lille1.idl.stackoverflow.persistence.PostDatabase;
 import fr.lille1.idl.stackoverflow.tables.Post;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -68,7 +67,12 @@ public class Stack extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("/index.html").forward(request, response);
+        String stacktrace = (String) request.getParameter("stacktrace");
+        if (stacktrace == null) {
+            stacktrace = "";
+        }
+        request.setAttribute("stacktrace", stacktrace);
+        request.getRequestDispatcher("/index.jsp").forward(request, response);
     }
 
     /**
@@ -83,9 +87,6 @@ public class Stack extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String parameter = request.getParameter("stacktrace");
-        InputStream is = getServletContext().getResourceAsStream("/WEB-INF/config.properties");
-        fr.lille1.idl.stackoverflow.Configuration.getConfiguration().load(is);
-        is.close();
         JavaStackTraceParser parser = new JavaStackTraceParser();
         List<StackTraceItf> stackTraces = parser.parseAll(parameter);
         PostDatabase database = null;
