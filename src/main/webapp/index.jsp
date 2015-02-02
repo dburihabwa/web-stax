@@ -1,5 +1,12 @@
+<%-- 
+    Document   : index
+    Created on : 2 févr. 2015, 15:54:57
+    Author     : dorian
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html>    
     <head>
         <title>web-stax</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -16,20 +23,25 @@
                 list-style: none;
                 padding:  0;
             }
-            
+
         </style>
     </head>
-    <body >
+    <body>
         <div class="bs-docs-header">
             <h1 class="page-header">web-stax</h1>
-
-            <div>Search for your stack trace in the latest stackoverflow dump</div>
+            <div>Search for your stack trace in the latest stackoveflow dump</div>
         </div>
+
         <div class="bs-callout bs-callout-info">
-            <form method = "POST" action="stack">
+            <form method = "POST" action = "stack">
                 <div class="form-group">
                     <label for="stacktrace">What's your problem?</label>
-                    <textarea class="form-control" rows="3" name = "stacktrace" placeholder="Your stack trace here!" required></textarea>
+                    <textarea class="form-control" name = "stacktrace" placeholder = "Your stack trace here!" required><%
+                        String stacktrace = request.getParameter("stacktrace");
+                        if (stacktrace != null && stacktrace.length() > 0) {
+                            out.print(stacktrace);
+                        }
+                        %></textarea>
                 </div>
                 <input type ="submit" class="btn btn-primary btn-lg">
             </form>
@@ -43,6 +55,5 @@
                 <li><a href="https://github.com/AlexTwX/DataMining">https://github.com/AlexTwX/DataMining</a></li>
             </ul>
         </footer>
-
     </body>
 </html>

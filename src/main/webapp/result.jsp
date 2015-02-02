@@ -29,7 +29,7 @@
         </head>
         <body>
             <div class="bs-docs-header">
-            <h1>Results:</h1>
+            <h1>Results</h1>
         </div>
         <div class="bs-callout bs-callout-info">
             <ul>
